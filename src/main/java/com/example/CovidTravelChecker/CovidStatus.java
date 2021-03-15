@@ -10,14 +10,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CovidStatus {
-    public String getStatus(String[] countries) throws IOException, InterruptedException, JSONException {
+    public JSONObject getStatus(String[] countries) throws IOException, InterruptedException, JSONException {
         String country;
-        int now = 0;
-        int past = 0;
+        int now;
+        int past;
         int population;
+        List<String> listOfCountries = new ArrayList<String>();
+        List<Double> incidences = new ArrayList<>();
+
         JSONObject numbers = null;
         CovidNumberExtractor numberExtractor = new CovidNumberExtractor();
-        List<String> incidenceByCountry = new ArrayList<String>();
 
         DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDateTime dateTime = LocalDateTime.now();
@@ -29,9 +31,10 @@ public class CovidStatus {
             JSONObject dates = numbers.getJSONObject("dates");
             now = dates.getInt(dateFormat.format(dateTime.minusDays(1)));
             past = dates.getInt(dateFormat.format(dateTime.minusDays(8)));
-            incidenceByCountry.add(country + " : " + calculateIncidence(now, past, population));
+            incidences.add(calculateIncidence(now, past, population));
+            listOfCountries.add(country);
         }
-        return incidenceByCountry.toString();
+        return createJson(incidences, listOfCountries);
     }
 
     private double calculateIncidence(int now, int past, int population){
@@ -39,4 +42,15 @@ public class CovidStatus {
         return (newInfected*100000)/population;
     }
 
+    private JSONObject createJson(List<Double> sortedIncidences, List<String> sortedCountries){
+        JSONObject json = new JSONObject();
+        try {
+            for (int i = 0; i < sortedIncidences.size(); i++) {
+                json.put(sortedCountries.get(i), sortedIncidences.get(i));
+            }
+        }catch(JSONException e){
+            e.printStackTrace();
+        }
+        return json;
+    }
 }
