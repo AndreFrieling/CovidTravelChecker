@@ -1,5 +1,6 @@
 package com.example.CovidTravelChecker;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -42,15 +43,20 @@ public class CovidStatus {
         return (newInfected*100000)/population;
     }
 
-    private JSONObject createJson(List<Double> sortedIncidences, List<String> sortedCountries){
-        JSONObject json = new JSONObject();
+    private JSONObject createJson(List<Double> incidences, List<String> countries){
+        JSONObject allCountries = new JSONObject();
+        JSONArray incidenceByCountry = new JSONArray();
         try {
-            for (int i = 0; i < sortedIncidences.size(); i++) {
-                json.put(sortedCountries.get(i), sortedIncidences.get(i));
+            for (int i = 0; i < incidences.size(); i++) {
+                JSONObject x = new JSONObject();
+                x.put("country", countries.get(i));
+                x.put("incidence", incidences.get(i));
+                incidenceByCountry.put(x);
             }
+            allCountries.put("All", incidenceByCountry);
         }catch(JSONException e){
             e.printStackTrace();
         }
-        return json;
+        return allCountries;
     }
 }
