@@ -13,10 +13,10 @@ public class Controller {
 
     private CovidStatus covidStatus = new CovidStatus();
 
-    @GetMapping(value = "", consumes = "application/json", produces = "application/json")
+    @GetMapping(value = "/incidence", consumes = "application/json", produces = "application/json")
     public ResponseEntity<String> sendGet(@org.springframework.web.bind.annotation.RequestBody RequestBody parameters) throws IOException, InterruptedException, JSONException {
         String[] countries = parameters.getCountries();
-        JSONObject answer = covidStatus.getStatus(countries);
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body(answer.toString());
+        String answer = covidStatus.getStatus(countries);
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(answer);
     }
 }

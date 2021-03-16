@@ -11,13 +11,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CovidStatus {
-    public JSONObject getStatus(String[] countries) throws IOException, InterruptedException, JSONException {
+    public String getStatus(String[] countries) throws IOException, InterruptedException, JSONException {
         String country;
         int now;
         int past;
         int population;
         List<String> listOfCountries = new ArrayList<String>();
-        List<Double> incidences = new ArrayList<>();
+        List<String> incidences = new ArrayList<>();
 
         JSONObject numbers = null;
         CovidNumberExtractor numberExtractor = new CovidNumberExtractor();
@@ -27,15 +27,20 @@ public class CovidStatus {
 
         for(int index = 0; index < countries.length; index++) {
             country = countries[index];
-            numbers = numberExtractor.getNumbers(country).getJSONObject("All");
-            population = numbers.getInt("population");
-            JSONObject dates = numbers.getJSONObject("dates");
-            now = dates.getInt(dateFormat.format(dateTime.minusDays(1)));
-            past = dates.getInt(dateFormat.format(dateTime.minusDays(8)));
-            incidences.add(calculateIncidence(now, past, population));
+            numbers = numberExtractor.getNumbers(country);
+            if(numbers.has("All")) {
+                numbers = numbers.getJSONObject("All");
+                population = numbers.getInt("population");
+                JSONObject dates = numbers.getJSONObject("dates");
+                now = dates.getInt(dateFormat.format(dateTime.minusDays(1)));
+                past = dates.getInt(dateFormat.format(dateTime.minusDays(8)));
+                incidences.add("" + calculateIncidence(now, past, population));
+            }else{
+                incidences.add("Not found. Make sure the country is spelled correctly (English)");
+            }
             listOfCountries.add(country);
         }
-        return createJson(incidences, listOfCountries);
+        return createJson(incidences, listOfCountries).toString();
     }
 
     private double calculateIncidence(int now, int past, int population){
@@ -43,7 +48,7 @@ public class CovidStatus {
         return (newInfected*100000)/population;
     }
 
-    private JSONObject createJson(List<Double> incidences, List<String> countries){
+    private JSONObject createJson(List<String> incidences, List<String> countries){
         JSONObject allCountries = new JSONObject();
         JSONArray incidenceByCountry = new JSONArray();
         try {
