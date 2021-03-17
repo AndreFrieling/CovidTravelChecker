@@ -1,5 +1,6 @@
 package com.example.CovidTravelChecker;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -10,13 +11,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CovidStatus {
-    public JSONObject getStatus(String[] countries) throws IOException, InterruptedException, JSONException {
+    public String getStatus(String[] countries) throws IOException, InterruptedException, JSONException {
         String country;
         int now;
         int past;
         int population;
         List<String> listOfCountries = new ArrayList<String>();
-        List<Double> incidences = new ArrayList<>();
+        List<String> incidences = new ArrayList<>();
 
         JSONObject numbers = null;
         CovidNumberExtractor numberExtractor = new CovidNumberExtractor();
@@ -26,31 +27,46 @@ public class CovidStatus {
 
         for(int index = 0; index < countries.length; index++) {
             country = countries[index];
-            numbers = numberExtractor.getNumbers(country).getJSONObject("All");
-            population = numbers.getInt("population");
-            JSONObject dates = numbers.getJSONObject("dates");
-            now = dates.getInt(dateFormat.format(dateTime.minusDays(1)));
-            past = dates.getInt(dateFormat.format(dateTime.minusDays(8)));
-            incidences.add(calculateIncidence(now, past, population));
+            numbers = numberExtractor.getNumbers(country);
+            if(numbers.has("All")) {
+                numbers = numbers.getJSONObject("All");
+                population = numbers.getInt("population");
+                JSONObject dates = numbers.getJSONObject("dates");
+                now = dates.getInt(dateFormat.format(dateTime.minusDays(1)));
+                past = dates.getInt(dateFormat.format(dateTime.minusDays(8)));
+                incidences.add("" + calculateIncidence(now, past, population));
+            }else{
+                incidences.add("Not found. Make sure the country is spelled correctly (English)");
+            }
             listOfCountries.add(country);
         }
-        return createJson(incidences, listOfCountries);
+        return createJson(incidences, listOfCountries).toString();
     }
 
     private double calculateIncidence(int now, int past, int population){
         double newInfected = now - past;
-        return (newInfected*100000)/population;
+        double incidence = (newInfected*100000)/population;
+        return roundTo2Decimals(incidence);
     }
 
-    private JSONObject createJson(List<Double> sortedIncidences, List<String> sortedCountries){
-        JSONObject json = new JSONObject();
+    private double roundTo2Decimals(double d){
+        return Math.round(d*100.0)/100.0;
+    }
+
+    private JSONObject createJson(List<String> incidences, List<String> countries){
+        JSONObject allCountries = new JSONObject();
+        JSONArray incidenceByCountry = new JSONArray();
         try {
-            for (int i = 0; i < sortedIncidences.size(); i++) {
-                json.put(sortedCountries.get(i), sortedIncidences.get(i));
+            for (int i = 0; i < incidences.size(); i++) {
+                JSONObject x = new JSONObject();
+                x.put("country", countries.get(i));
+                x.put("incidence", incidences.get(i));
+                incidenceByCountry.put(x);
             }
+            allCountries.put("All", incidenceByCountry);
         }catch(JSONException e){
             e.printStackTrace();
         }
-        return json;
+        return allCountries;
     }
 }
