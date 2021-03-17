@@ -45,7 +45,12 @@ public class CovidStatus {
 
     private double calculateIncidence(int now, int past, int population){
         double newInfected = now - past;
-        return (newInfected*100000)/population;
+        double incidence = (newInfected*100000)/population;
+        return roundTo2Decimals(incidence);
+    }
+
+    private double roundTo2Decimals(double d){
+        return Math.round(d*100.0)/100.0;
     }
 
     private JSONObject createJson(List<String> incidences, List<String> countries){
