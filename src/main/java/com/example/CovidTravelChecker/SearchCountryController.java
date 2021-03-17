@@ -1,5 +1,6 @@
 package com.example.CovidTravelChecker;
 
+import ch.qos.logback.core.joran.action.ActionConst;
 import org.json.JSONException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,13 +12,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @Controller
 public class SearchCountryController {
 
+    private static final Logger LOGGER = Logger.getLogger( SearchCountryController.class.getName() );
+
     private List<CountryIncidence> countryIncidenceList = new ArrayList<>();
 
-    @RequestMapping("/")
+    @RequestMapping("/home")
     public String home() {
         return "index";
     }
@@ -39,6 +44,8 @@ public class SearchCountryController {
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (JSONException e) {
+            LOGGER.log(Level.WARNING,"Country with name " + countryIncidence.getName() + " not Found");
+            model.addAttribute("warning", "Country with name " + countryIncidence.getName() + " not Found");
             e.printStackTrace();
         }
         model.addAttribute("countryIncidenceList", countryIncidenceList);

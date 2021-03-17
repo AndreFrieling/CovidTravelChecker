@@ -3,6 +3,7 @@ package com.example.CovidTravelChecker;
 public class CountryIncidence {
     private String name;
     private double incidence;
+    private String color;
 
     public String getName() {
         return name;
@@ -18,6 +19,14 @@ public class CountryIncidence {
 
     public void setIncidence(double incidence) {
         this.incidence = incidence;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
     }
 
     @Override

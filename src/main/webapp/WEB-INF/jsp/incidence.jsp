@@ -28,12 +28,20 @@
 			<form:input path="name"/>
 			<br/>
 			<form:button>Search</form:button>
-            <br/>
-		    <c:forEach items="${countryIncidenceList}" var="countryWithIncidence">
-                <c:out value="${countryWithIncidence.name}" />
-                <c:out value="${countryWithIncidence.incidence}" />
-                <br/>
-            </c:forEach>
+			<br/>
+            <table border="1">
+                <tr>
+                    <th>Country</th>
+                    <th>Incidence</th>
+                </tr>
+		        <c:forEach items="${countryIncidenceList}" var="countryWithIncidence">
+		            <tr style="${countryWithIncidence.color}">
+		                <td><c:out value="${countryWithIncidence.name}" /></td>
+                        <td><c:out value="${countryWithIncidence.incidence}"/></td>
+                    </tr>
+                </c:forEach>
+            </table>
+            <form:label style="color: red;" modelAttribute="warning" path="">${warning}</form:label>
 		</form:form>
 	</div>
 </body>
