@@ -4,14 +4,13 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
 public class CovidStatus {
-    public String getStatus(String[] countries) throws IOException, InterruptedException, JSONException {
+    public String getStatus(String[] countries){
         String country;
         int now;
         int past;
@@ -29,12 +28,18 @@ public class CovidStatus {
             country = countries[index];
             numbers = numberExtractor.getNumbers(country);
             if(numbers.has("All")) {
-                numbers = numbers.getJSONObject("All");
-                population = numbers.getInt("population");
-                JSONObject dates = numbers.getJSONObject("dates");
-                now = dates.getInt(dateFormat.format(dateTime.minusDays(1)));
-                past = dates.getInt(dateFormat.format(dateTime.minusDays(8)));
-                incidences.add("" + calculateIncidence(now, past, population));
+                try {
+                    numbers = numbers.getJSONObject("All");
+                    population = numbers.getInt("population");
+                    JSONObject dates = numbers.getJSONObject("dates");
+                    now = dates.getInt(dateFormat.format(dateTime.minusDays(1)));
+                    past = dates.getInt(dateFormat.format(dateTime.minusDays(8)));
+                    incidences.add("" + calculateIncidence(now, past, population));
+                }catch(JSONException e){
+                    incidences.add("Data for this country could not be read!");
+                }
+            }else if(numbers.length()==0){
+                incidences.add("Could not receive data, please try again later!");
             }else{
                 incidences.add("Not found. Make sure the country is spelled correctly (English)");
             }
