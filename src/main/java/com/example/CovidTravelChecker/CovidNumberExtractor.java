@@ -21,7 +21,7 @@ public class CovidNumberExtractor {
         try {
             json = new JSONObject(response.body());
         }catch (org.json.JSONException e){
-            System.out.println(e);
+            e.printStackTrace();
         }
         return json;
     }
