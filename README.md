@@ -54,7 +54,8 @@ The coutries also receive a color-rating based on their current incidence:
 
 <h2>Frontend Use</h2>
 <p>We've created an example frontend to show how data could be used in an economic environment. Here you can enter a country and it will be shown in a table including its incidence as well as its colorrating.</p>
-<img src="./img/StartPage.jpeg" alt="StartPage" sizes="33%"/>
-<img src="./img/CountryList1.jpeg" alt="CountryList1" sizes="33%"/>
-<img src="./img/CountryList2.jpeg" alt="CountryList2" sizes="33%"/>
+
+<img src="./img/StartPage.jpeg" alt="StartPage" style="display: inline-block;"/>
+<img src="./img/CountryList1.jpeg" alt="CountryList1" style="display: inline-block;"/>
+<img src="./img/CountryList2.jpeg" alt="CountryList2" style="display: inline-block;"/>
 
