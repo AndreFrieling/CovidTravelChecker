@@ -54,7 +54,18 @@ The coutries also receive a color-rating based on their current incidence:
 
 <h2>Frontend Use</h2>
 <p>We've created an example frontend to show how data could be used in an economic environment. Here you can enter a country and it will be shown in a table including its incidence as well as its colorrating.</p>
-![StartPage](https://user-images.githubusercontent.com/15551341/112497979-62f09480-8d86-11eb-910a-27249da56623.jpeg) ![CountryList1](https://user-images.githubusercontent.com/15551341/112498007-697f0c00-8d86-11eb-958f-cc4d52afddb8.jpeg) ![CountryList2](https://user-images.githubusercontent.com/15551341/112498023-6e43c000-8d86-11eb-8469-38107c86b063.jpeg)
+<table>
+  <tr>
+    <td align="center">StartPage</td>
+     <td align="center">CountryList1</td>
+     <td align="center">CountryList2</td>
+  </tr>
+  <tr>
+    <td><img src="https://user-images.githubusercontent.com/15551341/112497979-62f09480-8d86-11eb-910a-27249da56623.jpeg" width=300 height=420></td>
+    <td><img src="https://user-images.githubusercontent.com/15551341/112498007-697f0c00-8d86-11eb-958f-cc4d52afddb8.jpeg" width=300 height=420></td>
+    <td><img src="https://user-images.githubusercontent.com/15551341/112498023-6e43c000-8d86-11eb-8469-38107c86b063.jpeg" width=300 height=420></td>
+  </tr>
+ </table>
 
 
 
