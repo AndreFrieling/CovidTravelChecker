@@ -20,16 +20,26 @@ The coutries also receive a color-rating based on their current incidence:
 </ul>
 </p>
 
-<h2>API-Request
+<h2>API-Request</h2>
 
-<h2>JSON-Request: Example</h2>
+<h3>API-Endpoint</h3>
+Once running the API can be use by following endpoint:
+<pre><code>/incidence</code></pre>
+
+Append the country you want to know the incidence of with the parameter <pre><code>country</code></pre>
+
+Example:
+<pre><code>/incidence?country=Germany</code></pre>
+
+
+<h3>JSON-Request: Example</h3>
 <pre><code class = "lang-JSON">{
   <span class="hljs-attr">"countries"</span>: <span class="hljs-text">[Germany, Franc, Australia] </span>
 }
 </code></pre>
 
 
-<h3>JSON-Response Example</h3>
+<h3>JSON-Response: Example</h3>
 
 <pre><code class="lang-JSON">{
   <span class="hljs-attr">"All"</span>: [{
