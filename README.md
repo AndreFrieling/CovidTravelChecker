@@ -12,6 +12,12 @@
 <p> The API compares a list of selected countries regarding their current Covid-situation based on
 <a href="https://github.com/M-Media-Group/Covid-19-API">Covid-19-API</a> and orders them ascending by their 7-day-incidence.</br>
 The coutries also receive a color-rating based on their current incidence:
+```diff
+- text in red
++ text in green
+! text in orange
+# text in gray
+```
 <ul>
 <li style= "color: #008000;">`#008000`green - 35</li>
 <li style= "color: #ffa500;">orange- 35-50</li>
