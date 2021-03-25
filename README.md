@@ -3,7 +3,7 @@
 
 
 
-<p>In our bid to do our part, we've expanded a free public API for others to build apps upon. The API returns live 7-day-incidence for up to five preselected countries.</p>
+<p>In our bid to do our part, we've expanded a free public API for others to build apps upon. The API returns live 7-day-incidence for preselected countries.</p>
 
 
 <h2>What the API does
