@@ -13,8 +13,8 @@
 <a href="https://github.com/M-Media-Group/Covid-19-API">Covid-19-API</a> and orders them ascending by their 7-day-incidence.</br>
 The coutries also receive a color-rating based on their current incidence:
 <ul>
-<li style= "color: green;">green - 35</li>
-<li style= "color: orange;">orange- 35-50</li>
+<li style= "color: #008000;">green - 35</li>
+<li style= "color: #ffa500;">orange- 35-50</li>
 <li style= "color: red;">red - 50-100</li>
 <li style= "color: darkred;">darkred - 100+</li>
 </ul>
