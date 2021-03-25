@@ -31,6 +31,8 @@ Append the country you want to know the incidence of with the parameter <pre><co
 Example:
 <pre><code>/incidence?country=Germany</code></pre>
 
+When you desire the incidences of multiple countries, you need to send a JSON-Body instead of the Request Parameter.
+
 
 <h3>JSON-Request: Example</h3>
 <pre><code class = "lang-JSON">{
